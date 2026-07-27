@@ -43,6 +43,7 @@ const ICONS = {
   piggy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v1h1.5L20 15v3a1 1 0 0 1-1 1h-2v-2H8v2H6a1 1 0 0 1-1-1v-2a5 5 0 0 1-1-3Z"/><circle cx="9" cy="10" r="1"/></svg>',
   flame:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2s-6 5.5-6 11a6 6 0 0 0 12 0c0-1.5-.5-2.5-1-3.5.3 2-1 3-1 3 .5-3-2-5-2-7.5-1 1.5-2 2-2 4Z"/></svg>',
   target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+  handshake:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21c-2.5-1.5-5-4-5-7 0-1.5 1-2.5 2-2.5 1.3 0 1.7 1 2.5 1.5"/><path d="M16 21c2.5-1.5 5-4 5-7 0-1.5-1-2.5-2-2.5-1.3 0-1.7 1-2.5 1.5"/><path d="M9 12.5c-1-2 0-4 1-5.5.7-1 1-2 1-3.5 1.7 1 3 3 3 5s-.7 3-2 4"/></svg>',
   edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/></svg>',
   copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>',
@@ -123,6 +124,15 @@ function escapeHtml(str){
 }
 
 function categoryColor(cat){ return CATEGORY_COLORS.get(cat) || '#9BA1AC'; }
+
+/* Shared premium empty-state markup: icon + title + short description */
+function emptyState(icon, title, desc){
+  return `<div class="empty-state">
+    <div class="empty-state-icon">${icon}</div>
+    <h4 class="empty-state-title">${escapeHtml(title)}</h4>
+    <p class="empty-state-desc">${escapeHtml(desc)}</p>
+  </div>`;
+}
 
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
@@ -405,16 +415,17 @@ function renderDashboard(){
   document.getElementById('todayLabel').textContent = parseLocalDate(todayStr()).toLocaleDateString('en-US', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 
   const cards = [
-    { label:"Today's spending", value: formatCurrency(s.todaySpend), sub: `${s.todayCount} transaction${s.todayCount===1?'':'s'} today`, cls:'negative' },
-    { label:'This month spending', value: formatCurrency(s.monthSpend), sub: `${s.monthCount} transaction${s.monthCount===1?'':'s'} this month`, cls:'negative' },
-    { label:'Income (this month)', value: formatCurrency(s.monthIncome), sub:'Credited so far', cls:'positive' },
-    { label:'Savings (this month)', value: formatCurrency(s.savings), sub:'Income − expense', cls: s.savings>=0?'positive':'negative' },
-    { label:'Loan balance', value: formatCurrency(Math.abs(s.loans.net)), sub: s.loans.net>=0? "You're owed net" : 'You owe net', cls: s.loans.net>=0?'positive':'negative' },
-    { label:'Cash balance', value: formatCurrency(s.cashBalance), sub:'Cash on hand', cls: s.cashBalance>=0?'positive':'negative' },
-    { label:'Remaining budget', value: formatCurrency(s.remaining), sub: s.budget ? `${Math.min(100, Math.round(s.monthSpend/s.budget*100))}% of budget used` : 'No budget set', cls: s.remaining>=0?'positive':'negative' },
+    { icon:ICONS.flame, label:"Today's spending", value: formatCurrency(s.todaySpend), sub: `${s.todayCount} transaction${s.todayCount===1?'':'s'} today`, cls:'negative' },
+    { icon:ICONS.trend, label:'This month spending', value: formatCurrency(s.monthSpend), sub: `${s.monthCount} transaction${s.monthCount===1?'':'s'} this month`, cls:'negative' },
+    { icon:ICONS.sun, label:'Income (this month)', value: formatCurrency(s.monthIncome), sub:'Credited so far', cls:'positive' },
+    { icon:ICONS.piggy, label:'Savings (this month)', value: formatCurrency(s.savings), sub:'Income − expense', cls: s.savings>=0?'positive':'negative' },
+    { icon:ICONS.handshake, label:'Loan balance', value: formatCurrency(Math.abs(s.loans.net)), sub: s.loans.net>=0? "You're owed net" : 'You owe net', cls: s.loans.net>=0?'positive':'negative' },
+    { icon:ICONS.wallet, label:'Cash balance', value: formatCurrency(s.cashBalance), sub:'Cash on hand', cls: s.cashBalance>=0?'positive':'negative' },
+    { icon:ICONS.target, label:'Remaining budget', value: formatCurrency(s.remaining), sub: s.budget ? `${Math.min(100, Math.round(s.monthSpend/s.budget*100))}% of budget used` : 'No budget set', cls: s.remaining>=0?'positive':'negative' },
   ];
   document.getElementById('statGrid').innerHTML = cards.map(c => `
     <div class="stat-card">
+      <div class="stat-card-icon">${c.icon}</div>
       <div class="stat-label">${c.label}</div>
       <div class="stat-value ${c.cls}">${c.value}</div>
       <div class="stat-sub">${c.sub}</div>
@@ -434,7 +445,7 @@ function renderDashboard(){
   const recent = [...state.transactions].sort((a,b)=> b.date.localeCompare(a.date) || b.createdAt - a.createdAt).slice(0, 6);
   const recentList = document.getElementById('recentTxnList');
   if(recent.length === 0){
-    recentList.innerHTML = '<p class="empty-state">No transactions yet — add your first one above.</p>';
+    recentList.innerHTML = emptyState('📈', 'No transactions yet', 'Start tracking your expenses by adding your first transaction.');
   }else{
     recentList.innerHTML = recent.map(t => renderTxnRow(t, true)).join('');
     wireTxnRowActions(recentList);
@@ -628,7 +639,7 @@ function openDayModal(dateStr){
     <span>Net <b>${formatCurrency(income-expense)}</b></span>`;
   const list = document.getElementById('dayModalList');
   if(txns.length === 0){
-    list.innerHTML = '<p class="empty-state">Nothing recorded on this day.</p>';
+    list.innerHTML = emptyState('🗓️', 'Nothing recorded', 'Nothing was tracked on this day yet.');
   }else{
     list.innerHTML = txns.map(t => renderTxnRow(t,false)).join('');
     wireTxnRowActions(list);
@@ -743,12 +754,13 @@ function renderLoansPage(){
   const { given, taken, net } = loanNetBalance();
   const overdueCount = state.loans.filter(l => loanStatus(l) === 'overdue').length;
   document.getElementById('loanStatGrid').innerHTML = [
-    { label:'Total given', value: formatCurrency(given), cls:'positive' },
-    { label:'Total taken', value: formatCurrency(taken), cls:'negative' },
-    { label:'Net balance', value: formatCurrency(Math.abs(net)), cls: net>=0?'positive':'negative', sub: net>=0 ? "You're owed" : 'You owe' },
-    { label:'Overdue loans', value: overdueCount, cls: overdueCount>0?'negative':'' },
+    { icon:ICONS.sun, label:'Total given', value: formatCurrency(given), cls:'positive' },
+    { icon:ICONS.flame, label:'Total taken', value: formatCurrency(taken), cls:'negative' },
+    { icon:ICONS.handshake, label:'Net balance', value: formatCurrency(Math.abs(net)), cls: net>=0?'positive':'negative', sub: net>=0 ? "You're owed" : 'You owe' },
+    { icon:ICONS.target, label:'Overdue loans', value: overdueCount, cls: overdueCount>0?'negative':'' },
   ].map(c => `
     <div class="stat-card">
+      <div class="stat-card-icon">${c.icon}</div>
       <div class="stat-label">${c.label}</div>
       <div class="stat-value ${c.cls}">${c.value}</div>
       ${c.sub ? `<div class="stat-sub">${c.sub}</div>` : ''}
@@ -839,7 +851,7 @@ function generateReport(monthValue){
           <span class="breakdown-name">${escapeHtml(cat)}</span>
           <span class="breakdown-bar-track"><span class="breakdown-bar-fill" style="width:${maxCat?Math.round(val/maxCat*100):0}%;background:${categoryColor(cat)}"></span></span>
           <span class="breakdown-value">${formatCurrency(val)}</span>
-        </div>`).join('') : '<p class="empty-state">No expenses this month.</p>'}
+        </div>`).join('') : emptyState('🧾', 'No expenses this month', 'This month has no expense entries to break down yet.')}
     </div>
     <div class="card">
       <div class="card-head"><h3>Payment method breakdown</h3></div>
@@ -848,7 +860,7 @@ function generateReport(monthValue){
           <span class="breakdown-name">${escapeHtml(method)}</span>
           <span class="breakdown-bar-track"><span class="breakdown-bar-fill" style="width:${maxMethod?Math.round(val/maxMethod*100):0}%"></span></span>
           <span class="breakdown-value">${formatCurrency(val)}</span>
-        </div>`).join('') : '<p class="empty-state">No expenses this month.</p>'}
+        </div>`).join('') : emptyState('💳', 'No expenses this month', 'No payment method activity to show for this period.')}
     </div>
     <div class="card">
       <div class="card-head"><h3>Top 5 expenses</h3></div>
@@ -856,7 +868,7 @@ function generateReport(monthValue){
         <div class="report-list-item">
           <span>${formatDatePretty(t.date)} · ${escapeHtml(t.category)} · ${escapeHtml(t.method)}${t.notes ? ' · ' + escapeHtml(t.notes) : ''}</span>
           <span class="mono">${formatCurrency(t.amount)}</span>
-        </div>`).join('') : '<p class="empty-state">No expenses this month.</p>'}
+        </div>`).join('') : emptyState('🏆', 'No expenses this month', "Once you've logged expenses, the biggest ones will show up here.")}
     </div>`;
 
   document.getElementById('reportOutput').innerHTML = html;
@@ -1124,6 +1136,7 @@ function init(){
   });
   document.getElementById('mobileMenuBtn').addEventListener('click', openSidebar);
   document.getElementById('sidebarScrim').addEventListener('click', closeSidebar);
+  document.getElementById('topbarSettingsBtn').addEventListener('click', () => goToSection('settings'));
 
   // Theme
   document.getElementById('themeToggle').addEventListener('click', toggleTheme);

@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Ledger — Personal Finance Tracker</title>
-<meta name="description" content="A minimal, offline personal finance tracker. Track cash, cards, UPI and bank activity, see a spending calendar, and understand your money at a glance." />
+<title>Ledger — Personal Finance, Beautifully Tracked</title>
+<meta name="description" content="A premium, offline personal finance tracker. Track cash, cards, UPI and bank activity, see a spending calendar, and understand your money at a glance." />
 
-<!-- Google Fonts: Inter (UI) + IBM Plex Mono (figures/data) -->
+<!-- Google Fonts: Manrope (headings) + Inter (body/UI) + IBM Plex Mono (figures/data) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -20,7 +20,7 @@
   <!-- ============ SIDEBAR (desktop) ============ -->
   <nav class="sidebar" id="sidebar">
     <div class="brand">
-      <span class="brand-mark">◆Kasartech</span>
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z" fill="currentColor" fill-opacity=".22"/><path d="M12 2 3 7l9 5 9-5-9-5Z" fill="currentColor"/></svg></span>
       <span class="brand-name">Ledger</span>
     </div>
 
@@ -83,10 +83,20 @@
         <input type="text" id="globalSearch" placeholder="Search category, method, notes, amount, date…" autocomplete="off" />
       </div>
 
-      <button class="btn btn-primary" id="openAddModalBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-        Add transaction
-      </button>
+      <div class="topbar-actions">
+        <button class="icon-btn topbar-icon-btn" id="topbarSettingsBtn" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H2.5a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3H8.8a1.7 1.7 0 0 0 1-1.6V2.5a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.2a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+        </button>
+        <button class="icon-btn topbar-icon-btn notif-btn" id="notifBtn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6Z"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar" title="Your account">YOU</div>
+        <button class="btn btn-primary" id="openAddModalBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Add transaction
+        </button>
+      </div>
     </header>
 
     <main class="content" id="content">
@@ -214,7 +224,11 @@
             <span>Date</span><span>Category</span><span>Method</span><span>Notes</span><span class="right">Amount</span><span></span>
           </div>
           <div class="txn-list full" id="allTxnList"><!-- filled by JS --></div>
-          <p class="empty-state" id="txnEmptyState" hidden>No transactions match these filters yet.</p>
+          <div class="empty-state" id="txnEmptyState" hidden>
+            <div class="empty-state-icon">🔍</div>
+            <h4 class="empty-state-title">No matches here</h4>
+            <p class="empty-state-desc">Nothing fits these filters yet — try widening the date range or clearing the search.</p>
+          </div>
         </div>
       </section>
 
@@ -292,7 +306,11 @@
           </div>
           <p class="muted small">Recurring items auto-create a transaction on their day of month, once, per month.</p>
           <div class="recurring-list" id="recurringList"><!-- filled by JS --></div>
-          <p class="empty-state" id="recurringEmptyState" hidden>No recurring expenses set up yet.</p>
+          <div class="empty-state" id="recurringEmptyState" hidden>
+            <div class="empty-state-icon">🔁</div>
+            <h4 class="empty-state-title">Nothing recurring yet</h4>
+            <p class="empty-state-desc">Add rent, EMIs, or subscriptions once and they'll post themselves every month.</p>
+          </div>
         </div>
       </section>
 
@@ -311,7 +329,11 @@
             <button class="btn btn-secondary btn-sm" id="openLoanModalBtn">+ New loan</button>
           </div>
           <div class="loan-list" id="loanList"><!-- filled by JS --></div>
-          <p class="empty-state" id="loanEmptyState" hidden>No loans recorded yet.</p>
+          <div class="empty-state" id="loanEmptyState" hidden>
+            <div class="empty-state-icon">🤝</div>
+            <h4 class="empty-state-title">No loans recorded</h4>
+            <p class="empty-state-desc">Track money you've lent or borrowed, with interest and due dates, in one place.</p>
+          </div>
         </div>
       </section>
 

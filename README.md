@@ -1,6 +1,8 @@
 # Ledger — Personal Finance Tracker
 
-A minimal, offline personal finance dashboard. No login, no backend, no build step — just open `index.html` and start tracking. Every entry is saved straight to your browser's `localStorage`.
+A premium, offline personal finance dashboard, styled in the Primary Purple (`#9129FF`) / Dark Purple (`#400D7C`) / Accent Yellow (`#FED600`) palette with soft colored shadows, 18–24px rounded corners, and light glassmorphism on the top bar and modals. No login, no backend, no build step — just open `index.html` and start tracking. Every entry is saved straight to your browser's `localStorage`.
+
+All original functionality — calculations, filters, exports, recurring expenses, keyboard shortcuts, everything — works exactly as before. This pass only touched the design layer: `style.css` was rewritten with the new tokens, and a handful of presentational tweaks (icons on summary cards, richer empty states, a settings shortcut in the top bar) were added to `script.js`/`index.html` without changing any IDs, event logic, or storage format.
 
 ## Running it
 
