@@ -1,73 +1,194 @@
-# Ledger — Personal Finance Tracker
+# 💰 Kasartech Ledger
 
-A premium, offline personal finance dashboard, styled in the Primary Purple (`#9129FF`) / Dark Purple (`#400D7C`) / Accent Yellow (`#FED600`) palette with soft colored shadows, 18–24px rounded corners, and light glassmorphism on the top bar and modals. No login, no backend, no build step — just open `index.html` and start tracking. Every entry is saved straight to your browser's `localStorage`.
+<div align="center">
 
-All original functionality — calculations, filters, exports, recurring expenses, keyboard shortcuts, everything — works exactly as before. This pass only touched the design layer: `style.css` was rewritten with the new tokens, and a handful of presentational tweaks (icons on summary cards, richer empty states, a settings shortcut in the top bar) were added to `script.js`/`index.html` without changing any IDs, event logic, or storage format.
+### Modern Personal Finance & Expense Tracker Dashboard
 
-## Running it
+A clean, responsive, and modern expense management application built with **HTML, CSS, and JavaScript**. Track expenses, monitor budgets, manage loans, analyze spending, and gain financial insights through an intuitive dashboard.
 
-There's nothing to install. Either:
+![License](https://img.shields.io/badge/License-MIT-green)
+![HTML](https://img.shields.io/badge/HTML-5-orange)
+![CSS](https://img.shields.io/badge/CSS-3-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![Responsive](https://img.shields.io/badge/Responsive-Yes-success)
 
-- Double-click `index.html` to open it in your browser, or
-- Serve the folder locally for a nicer experience with a real URL, e.g. `npx serve .` or `python3 -m http.server`, then visit the printed address.
+</div>
 
-Chart.js is loaded from a CDN, so an internet connection is needed for the Analytics charts to render — everything else works fully offline.
+---
 
-## Project structure
+# 📸 Screenshots
+
+> Add your screenshots inside a folder named **screenshots**.
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+## Transactions
+
+![Transactions](screenshots/transactions.png)
+
+## Analytics
+
+![Analytics](screenshots/analytics.png)
+
+## Budget
+
+![Budget](screenshots/budget.png)
+
+## Dark Mode
+
+![Dark Mode](screenshots/darkmode.png)
+
+---
+
+# ✨ Features
+
+- 📊 Interactive Finance Dashboard
+- 💸 Income & Expense Tracking
+- 📅 Daily & Monthly Spending Overview
+- 📈 Financial Analytics
+- 🎯 Budget Planning
+- 💰 Savings Monitoring
+- 🏦 Loan Management
+- 📑 Reports Section
+- 🌙 Dark Mode
+- 🔍 Smart Search
+- 📱 Fully Responsive Design
+- ⚡ Fast & Lightweight
+- 🎨 Modern FinTech UI
+
+---
+
+# 🛠 Tech Stack
+
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- Local Storage
+- Responsive Design
+
+---
+
+# 🚀 Getting Started
+
+Clone the repository
+
+```bash
+git clone https://github.com/Manojkumarjena7/kasartech-ledger.git
+```
+
+Open the project
+
+```bash
+cd kasartech-ledger
+```
+
+Run the application
+
+Simply open
 
 ```
-finance-tracker/
-├── index.html   # markup for every section, modal, and the mobile nav
-├── style.css    # design tokens, layout, calendar heatmap, dark mode, print styles
-├── script.js    # state, rendering, calculations — organized into numbered modules
-└── README.md
+index.html
 ```
 
-`script.js` is split into clearly labeled sections (constants, state, utilities, CRUD, calendar, charts, exports, init) rather than separate files, since the brief asked for a single `script.js`.
+in your browser.
 
-## Data model
+---
 
-Everything lives under one `localStorage` key (`ledger_app_data_v1`) as structured JSON:
+# 📂 Project Structure
 
-```js
-{
-  transactions: [{ id, date, amount, type, category, method, notes, createdAt, recurringId? }],
-  loans:        [{ id, type, person, amount, paid, interest, dueDate, notes, createdAt }],
-  recurring:    [{ id, name, amount, category, method, dayOfMonth, active, lastGeneratedMonth }],
-  settings:     { theme, currency, monthlyBudget }
-}
+```
+kasartech-ledger/
+│
+├── index.html
+├── style.css
+├── script.js
+├── README.md
+└── screenshots/
+    ├── dashboard.png
+    ├── transactions.png
+    ├── analytics.png
+    ├── budget.png
+    └── darkmode.png
 ```
 
-### A note on Transfer / Receive
+---
 
-The brief's transaction fields cover one payment method per entry, with no separate "from/to" pair. So **Transfer** is treated as money leaving the selected method (it affects that method's balance but isn't counted as spending), and **Receive** is money arriving into the selected method (it affects the balance but isn't counted as income). This keeps balances accurate without inventing fields the form doesn't have.
+# 🎯 Roadmap
 
-### Cash Balance & Loan Balance
+- [ ] Export to PDF
+- [ ] Excel Export
+- [ ] Cloud Sync
+- [ ] User Authentication
+- [ ] Multi-user Support
+- [ ] Recurring Transactions
+- [ ] AI Expense Insights
+- [ ] Smart Budget Suggestions
+- [ ] Expense Prediction
+- [ ] PWA Support
 
-- **Cash balance** is a running total for the "Cash" method specifically: income/receive add to it, expense/transfer subtract from it.
-- **Loan balance** on the dashboard is net: (loans given − paid back to you) minus (loans taken − paid back by you). A positive number means you're owed money overall.
+---
 
-## Feature map
+# 💡 Why Kasartech Ledger?
 
-| Section | What's there |
-|---|---|
-| **Dashboard** | 7 stat cards, monthly budget bar, quick-add chips, recent transactions |
-| **Calendar** | Month grid heatmap — green for income-only days, orange/red scaled to that month's highest spending day, gray for no activity. Click any day for its full list |
-| **Transactions** | Date-range and type filters, full list with edit/duplicate/delete, JSON/CSV export, JSON import |
-| **Analytics** | 6 Chart.js charts: category pie, method pie, income vs. expense doughnut, 6-month bar, daily trend line, top categories horizontal bar |
-| **Insights** | 8 auto-calculated figures (most expensive day, top category, burn rate, etc.) |
-| **Budget & recurring** | Set a monthly budget with 80%/100% warnings; recurring templates (rent, EMI, etc.) that auto-post a transaction once per month on their day |
-| **Loans** | Given/taken tracking with interest, due dates, paid/pending/overdue status |
-| **Reports** | Pick any month for a full breakdown, printable via the browser's print dialog |
-| **Settings** | Theme, currency symbol, export/import/backup/restore, clear-all |
+Kasartech Ledger is designed to provide a simple yet powerful way to manage personal finances. It combines a modern user interface with essential financial tools to help users monitor spending, track budgets, and make informed financial decisions.
 
-## Keyboard shortcuts
+---
 
-- `Ctrl/Cmd + N` — new transaction
-- `Ctrl/Cmd + S` — submit whichever form/modal is open
-- `Esc` — close any open dialog
-- `/` — jump to search (when not typing elsewhere)
+# 🤝 Contributing
 
-## Customizing the palette
+Contributions are welcome.
 
-The single accent color and every neutral gray live as CSS custom properties at the top of `style.css` (`:root` for light mode, `[data-theme="dark"]` for dark). Change `--accent` to re-theme every button, active nav item, and chart accent in one place.
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/my-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push the branch
+
+```bash
+git push origin feature/my-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+# 👨‍💻 Developer
+
+**Manoj Kumar Jena**
+
+QA Engineer | AI Testing | Automation Testing | Frontend Enthusiast
+
+- GitHub: https://github.com/Manojkumarjena7
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving it a ⭐ on GitHub.
+
+It helps others discover the project and supports future improvements.
+
+---
+
+<div align="center">
+
+### Built with ❤️ by Manoj Kumar Jena
+
+</div>

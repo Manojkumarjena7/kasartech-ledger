@@ -193,9 +193,24 @@ textarea:focus-visible, [tabindex]:focus-visible{
   box-shadow:var(--shadow-xs);
 }
 .brand{
-  display:flex; align-items:center; gap:11px;
-  padding:6px 8px 26px 8px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
+
+.brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+}
+
+.brand-powered{
+    font-size:11px;
+    color:#9CA3AF;
+    font-weight:500;
+    letter-spacing:.4px;
+}
+
 .brand-mark{
   width:34px; height:34px; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
